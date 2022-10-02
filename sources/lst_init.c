@@ -18,7 +18,6 @@ t_cmd	*lst_init(t_token *init)
 
 	if ((list = malloc(sizeof(*list))) == NULL)
 		return (NULL);
-	init->next = NULL;
 	list->size = 1;
 	list->first = init;
 	list->last = init;

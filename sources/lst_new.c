@@ -18,5 +18,6 @@ t_token	*lst_new(void)
 
 	if ((new = malloc(sizeof(*new))) == NULL)
 		return (NULL);
+	new->next = NULL;
 	return (new);
 }
