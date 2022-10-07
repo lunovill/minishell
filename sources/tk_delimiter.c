@@ -14,7 +14,6 @@
 
 int	tk_isoperator(const char *operator, size_t size)
 {
-	ft_printf("[%u] : [%s]\n",size ,operator);
 	if (!ft_strncmp(DLESS, operator, size) || !ft_strncmp(DGREAT, operator, size))
 		return (0);
 	return (-1);
@@ -31,11 +30,33 @@ ssize_t	ft_quote(const char *line, char quote)
 	return (i + 1);
 }
 
-// ssize_t	ft_expansion(const char *line)
-// {
-// }
+unsigned int tk_delimiter(const char *line, unsigned int i, unsigned int j)
+{
+	while (line[j])
+	{
+		if (j && ft_strichr(CHAR_OPERATOR, line[j - 1]) != -1)
+		{
+			if (ft_strichr(CHAR_OPERATOR, line[j]) == -1 || tk_isoperator(line + i, j - i) == -1)
+				break ;
+			j++;
+		}
+		else if (line[j] == SGL_QUOTE || line[j] == DBL_QUOTE)
+		{
+			if (ft_quote(line + j, line[j]) == -1)
+				return (exit (42), 0);
+			j += ft_quote(line + j, line[j]);
+		}
+		else if ((j == 0 || ft_strichr(CHAR_OPERATOR, line[j - 1]) == -1) && ft_strichr(CHAR_OPERATOR, line[j]) != -1)
+			break ;
+		else if (line[j] == NEWLINE || line[j] == VTABULATION || line[j] == SPACE)
+			break ;
+		else
+			j++;
+	}
+	return (j);
+}
 
-t_cmd	*tk_delimiter(const char *line)
+t_cmd	*tk_recognition(const char *line)
 {
 	t_token			*token;
 	t_cmd			*cmd;
@@ -52,54 +73,27 @@ t_cmd	*tk_delimiter(const char *line)
 	j = 0;
 	while (line[i])
 	{
-		while (line[j])
-		{
-			if (j && !(ft_strichr(CHAR_OPERATOR, line[j - 1]) != -1 && !tk_isoperator(line + i, j - i)))
-			{
-				j++;
-				break ;
-			}
-			if (line[j] == SGL_QUOTE || line[j] == DBL_QUOTE)
-			{
-				if (ft_quote(line + j, line[j]) == -1)
-					return (NULL);
-				j += ft_quote(line + j, line[j]);
-				break ;
-			}
-			// else if (line[j] == EXPANSION)
-			// {
-			// 	j += ft_expansion(line + j);
-			// 	break ;
-			// }
-			else if ((j == 0 || ft_strichr(CHAR_OPERATOR, line[j - 1]) == -1) && ft_strichr(CHAR_OPERATOR, line[j]) != -1)
-			{
-exit (42);
-				break ;
-			}
-			else if (line[j] == NEWLINE)
-			{
-				j++;
-				break ;
-			}
-			else if (line[j] == VTABULATION || line[j] == SPACE)
-				break ;			
-			else
-				j++;
-
-		}
+		j = tk_delimiter(line, i, j);
 		token->s = ft_strndup(line + i, j - i);
-// ft_printf("[%s]\n", token->s);
 		if (token != cmd->first)
 			lst_add(cmd, cmd->last, token);
-		while (line[j] && (line[j] == VTABULATION || line[j] == SPACE))
-			j++;
-		if (!line[j])
-			break ;
+		if (line[j] == VTABULATION || line[j] == SPACE)
+		{
+			while (line[j] && (line[j] == VTABULATION || line[j] == SPACE))
+				j++;
+			i = j;
+		}
+		else
+		{
+			i = j;
+			if (line[j])
+				j++;
+			else
+				break ;
+		}
 		token = lst_new();
-		i = j;
 	}
-	// ft_printf("[%u][%u]\n", i, j);
-	if (!line[i])
+	if (i == 0)
 		token->s = ft_strdup("");
 	return (cmd);
 }
@@ -113,7 +107,7 @@ int main (void)
 	while((line = readline("minishell> ")))
 	{
 		add_history(line);
-		cmd = tk_delimiter(line);
+		cmd = tk_recognition(line);
 		lst_print(cmd);
 	}
 	return (0);
