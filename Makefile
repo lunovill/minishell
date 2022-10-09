@@ -20,7 +20,10 @@ SRC_FILES =	lst_add\
 				lst_new\
 				lst_print\
 				lst_rmv\
+				main\
+				tk_command\
 				tk_delimiter\
+				tk_recognition\
 
 SRCS = $(addsuffix .c, $(SRC_FILES))
 

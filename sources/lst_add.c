@@ -18,6 +18,7 @@ int	lst_add(t_cmd *list, t_token *befor, t_token *add)
 
 	if (list == NULL)
 		return (-1);
+	add->previous = befor;
 	if (befor == NULL)
 	{
 		add->next = list->first;

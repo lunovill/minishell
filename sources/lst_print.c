@@ -25,7 +25,7 @@ int	lst_print(t_cmd *list)
 	{
 		ft_printf("case n°%u\n", list->size - i);
 		// ft_printf("%u\n", current->id);
-		ft_printf("[%s]\n", current->s);
+		ft_printf("[%u][%s]\n", current->id, current->s);
 		ft_putchar('\n');
 		current = current->next;
 	}

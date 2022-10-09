@@ -19,6 +19,7 @@ struct			s_token
 {
 	unsigned int id;
 	char *s;
+	t_token	*previous;
 	t_token	*next;
 };
 
