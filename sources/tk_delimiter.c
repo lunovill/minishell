@@ -1,6 +1,7 @@
 #include "minishell.h"
 #define CheckOprtr(c) ((ft_strichr(STRG_OPERATOR, (c)) == -1) ? 0 : 1)
 #define CheckQuote(c) (((c) != CHAR_SGL_QUOTE && (c) != CHAR_DBL_QUOTE) ? 0 : (c))
+#define CheckExpns(c) (((c) != CHAR_EXPANSION) ? 0 : (c))
 #define CheckBlank(c) (((c) != CHAR_H_TAB && (c) != CHAR_V_TAB && (c) != CHAR_SPACE) ? 0 : 1)
 
 static int	tk_isoprtr(const char *operator, size_t size)
@@ -13,10 +14,11 @@ static int	tk_isoprtr(const char *operator, size_t size)
 	return (0);
 }
 
-int	tk_delimiter(const char *line, t_cmd *cmd, t_token *token)
+int	tk_delimiter(char *line, t_cmd *cmd, t_token *token)
 {
 	int				oprtr;
 	int				quote;
+	int				expns;
 	unsigned int	i;
 	unsigned int	j;
 
@@ -30,10 +32,12 @@ int	tk_delimiter(const char *line, t_cmd *cmd, t_token *token)
 			token = lst_new();
 		oprtr = CheckOprtr(line[i]);
 		quote = CheckQuote(line[i]);
+		expns = CheckExpns(line[i]);
 		j = i + 1;
 		// 1. Si la fin de l'entrée est reconnue, le jeton courant doit être délimité.
 		while (line[j])
 		{
+			ft_printf("j = [%c]\n", line[j]);
 			/* Si le caractère précédent a été utilisé dans le cadre d'un opérateur
 			et que le caractère actuel n'est pas entre guillemets
 			et peut être utilisé avec les caractères actuels pour former un opérateur,
@@ -60,7 +64,8 @@ int	tk_delimiter(const char *line, t_cmd *cmd, t_token *token)
 			else if (quote && line[j] == quote)
 				quote = 0;
 			/* Si le caractère actuel est un '$' sans guillemets, le shell doit identifier le début de tous les candidats à l'expansion des paramètres ( Parameter Expansion ), à la substitution de commande ( Command Substitution ) ou à l'expansion arithmétique ( Arithmetic Expansion ) à partir de leur introduction sans guillemets. séquences de caractères : '$' ou "${" , "$(" ou '`' , et "$((", respectivement. Le shell doit lire une entrée suffisante pour déterminer la fin de l'unité à développer (comme expliqué dans les sections citées). Lors du traitement des caractères, si des instances d'expansions ou de guillemets sont trouvées imbriquées dans la substitution, le shell les traitera de manière récursive de la manière spécifiée pour la construction trouvée. Les caractères trouvés depuis le début de la substitution jusqu'à sa fin, en tenant compte de toute récursivité nécessaire pour reconnaître les constructions imbriquées, doivent être inclus sans modification dans le jeton de résultat, y compris tout opérateur ou guillemet de substitution imbriqué ou englobant. Le jeton ne doit pas être délimité par la fin de la substitution.*/
-
+			else if (quote != CHAR_SGL_QUOTE && expns && !tk_expansion(&line, &j, cmd->env))
+				return (-1);
 			/* Si le caractère courant n'est pas entre guillemets
 			et peut être utilisé comme premier caractère d'un nouvel opérateur,
 			le jeton courant (le cas échéant) doit être délimité.
@@ -76,6 +81,7 @@ int	tk_delimiter(const char *line, t_cmd *cmd, t_token *token)
 			/* Si le caractère précédent faisait partie d'un mot,
 			le caractère courant doit être ajouté à ce mot.*/
 			oprtr = CheckOprtr(line[j]);
+			expns = CheckExpns(line[j]);
 			j++;
 		}
 // ft_printf("[%c] | oprtr = %i | quote = %i\n",line[j], oprtr, quote);
