@@ -21,7 +21,7 @@ static void	tk_operator(t_cmd *cmd)
 	}
 }
 
-static void	tk_pipe(t_token *current)
+static int	tk_pipe(t_token *current)
 {
 	while(current) // pipe_sequence
 	{
@@ -36,12 +36,13 @@ static void	tk_pipe(t_token *current)
 		if (current)
 		{
 			tk_pipe(current->previous);
-			return ;
+			return (0);
 		}
 	}
+	return (0);
 }
 
-t_cmd	*tk_recognition(const char *line)
+t_cmd	*tk_recognition(char *line, char **env)
 {
 	t_token			*first;
 	t_cmd			*cmd;
@@ -52,10 +53,12 @@ t_cmd	*tk_recognition(const char *line)
 	cmd = lst_init(first);
 	if (!cmd)
 		return (NULL);
+	cmd->env = env;
 	if (tk_delimiter(line, cmd, first) == -1)
 		return (NULL);
-//	tk_expansion();
 	tk_operator(cmd);
-	tk_pipe(cmd->last);
+	lst_print(cmd);
+	if (!tk_pipe(cmd->last))
+		return (NULL);
 	return (cmd);
 }

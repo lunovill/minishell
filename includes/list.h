@@ -28,6 +28,7 @@ typedef	struct	s_cmd
 	t_token	*first;
 	t_token	*last;
 	size_t	size;
+	char	**env;
 }				t_cmd;
 
 t_token			*lst_new();

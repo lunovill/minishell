@@ -39,8 +39,9 @@
 # include "list.h"
 
 
-int		tk_delimiter(const char *line, t_cmd *cmd, t_token *token);
+int		tk_delimiter(char *line, t_cmd *cmd, t_token *token);
 int		tk_command(t_token *current);
-t_cmd	*tk_recognition(const char *line);
+int     tk_expansion(char **line, unsigned int *i, char **env);
+t_cmd	*tk_recognition(char *line, char **env);
 
 #endif
