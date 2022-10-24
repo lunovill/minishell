@@ -16,6 +16,7 @@
 
 SRCS_DIR = sources
 SRC_FILES =	lst_add\
+				lst_free\
 				lst_init\
 				lst_new\
 				lst_print\
