@@ -39,7 +39,7 @@ static int	tk_pipe(t_token *current)
 			return (0);
 		}
 	}
-	return (0);
+	return (1);
 }
 
 t_cmd	*tk_recognition(char *line, char **env)
@@ -58,6 +58,7 @@ t_cmd	*tk_recognition(char *line, char **env)
 		return (NULL);
 	tk_operator(cmd);
 	lst_print(cmd);
-	tk_pipe(cmd->last);
+	if(!tk_pipe(cmd->last))
+		return (NULL);
 	return (cmd);
 }
