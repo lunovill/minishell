@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lunovill <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: skhali <skhali@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/15 05:19:02 by lunovill          #+#    #+#              #
-#    Updated: 2022/10/02 17:57:29 by lunovill         ###   ########.fr        #
+#    Updated: 2022/10/24 03:18:21 by skhali           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,8 +23,27 @@ SRC_FILES =	lst_add\
 				main\
 				tk_command\
 				tk_delimiter\
-				tk_expansion\
 				tk_recognition\
+				tk_expansion \
+				cd \
+				echo \
+				export \
+				pwd \
+				unset \
+				exit \
+				builtins \
+				env \
+				here_docs \
+				exec_single_builtin \
+				exec \
+				env_mangement \
+				free_minishell \
+				init_minishell \
+				lst_utils \
+				exec_utils \
+				signals \
+
+				
 
 SRCS = $(addsuffix .c, $(SRC_FILES))
 

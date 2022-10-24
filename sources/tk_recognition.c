@@ -58,7 +58,6 @@ t_cmd	*tk_recognition(char *line, char **env)
 		return (NULL);
 	tk_operator(cmd);
 	lst_print(cmd);
-	if (!tk_pipe(cmd->last))
-		return (NULL);
+	tk_pipe(cmd->last);
 	return (cmd);
 }

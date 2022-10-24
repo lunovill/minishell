@@ -37,7 +37,7 @@ int	tk_delimiter(char *line, t_cmd *cmd, t_token *token)
 		// 1. Si la fin de l'entrée est reconnue, le jeton courant doit être délimité.
 		while (line[j])
 		{
-			ft_printf("j = [%c]\n", line[j]);
+			//ft_printf("j = [%c]\n", line[j]);
 			/* Si le caractère précédent a été utilisé dans le cadre d'un opérateur
 			et que le caractère actuel n'est pas entre guillemets
 			et peut être utilisé avec les caractères actuels pour former un opérateur,

@@ -4,6 +4,7 @@
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <linux/limits.h>
 
 // Characteres values
 # define CHAR_H_TAB 9
