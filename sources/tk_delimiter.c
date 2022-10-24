@@ -25,10 +25,12 @@ int	tk_delimiter(char *line, t_cmd *cmd, t_token *token)
 	oprtr = 0;
 	quote = 0;
 	i = 0;
-	j = i + 1;
+	j = 0;
+	while (line[i] && CheckBlank(line[i]))
+			i++;
 	while (line[i])
 	{
-		if (i)
+		if (i && j)
 			token = lst_new();
 		oprtr = CheckOprtr(line[i]);
 		quote = CheckQuote(line[i]);
@@ -83,9 +85,8 @@ int	tk_delimiter(char *line, t_cmd *cmd, t_token *token)
 			expns = CheckExpns(line[j]);
 			j++;
 		}
-// ft_printf("[%c] | oprtr = %i | quote = %i\n",line[j], oprtr, quote);
 		if (quote)
-			return (-1);
+			return (ft_putstr_fd("minishell: syntax error token `quote' not closed\n", 2), -1);
 		token->s = ft_strndup(line + i, j - i);
 		if (token != cmd->first)
 			lst_add(cmd, cmd->last, token);
@@ -95,7 +96,7 @@ int	tk_delimiter(char *line, t_cmd *cmd, t_token *token)
 	}
 	/* S'il n'y a pas de jeton courant,
 	l'indicateur de fin d'entrée doit être renvoyé en tant que jeton.*/
-	if (!i)
+	if (!j)
 		token->s = ft_strdup("");
 	return (0);
 }
