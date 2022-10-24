@@ -29,17 +29,12 @@ static int	tk_pipe(t_token *current)
 		{
 			while (current->previous && current->previous->id != TK_PIPE)
 				current = current->previous;
-			tk_command(current);
-			if (current)
-				current = current->previous;
+			if (tk_command(current) == -1)
+				return (0);
 		}
-		if (current)
-		{
-			tk_pipe(current->previous);
-			return (0);
-		}
+		current = current->previous;
 	}
-	return (0);
+	return (1);
 }
 
 t_cmd	*tk_recognition(char *line, char **env)
@@ -52,13 +47,12 @@ t_cmd	*tk_recognition(char *line, char **env)
 		return (NULL);
 	cmd = lst_init(first);
 	if (!cmd)
-		return (NULL);
+		return (ft_free(first), NULL);
 	cmd->env = env;
 	if (tk_delimiter(line, cmd, first) == -1)
-		return (NULL);
+		return (lst_free(cmd), NULL);
 	tk_operator(cmd);
-	lst_print(cmd);
 	if (!tk_pipe(cmd->last))
-		return (NULL);
+		return (lst_free(cmd), NULL);
 	return (cmd);
 }

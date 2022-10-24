@@ -22,17 +22,14 @@ static int tk_add_expansion(char **line, unsigned int start, unsigned int end, c
 			new = ft_strjoinf(new, env[i] + size + 1, 1);
 			if (!new)
 				return (-1);
-			new = ft_strjoinf(new, *line + start + end, 1);
+			new = ft_strjoinf(new, *line + end, 1);
 			if (!new)
 				return (-1);
 			*line = new;
-	ft_printf("exp = [%s]", new);
-	exit (42);
-			return (0);
+			return (1);
 		}
 		i++;
 	}
-	exit (24);
 	return (0);
 }
 
@@ -40,6 +37,7 @@ int tk_expansion(char **line, unsigned int *start, char **env)
 {
 	unsigned int	end;
 	char			*expansion;
+	int				ret;
 
 	end = *start;
 	while ((*line)[end] && (*line)[end] != CHAR_EXPANSION
@@ -56,8 +54,11 @@ int tk_expansion(char **line, unsigned int *start, char **env)
 		if (!expansion)
 			return (0);
 		(*start)--;
-		if (tk_add_expansion(&*line, *start, end, expansion, env) == -1 || !*line)
+		ret = tk_add_expansion(&*line, *start, end, expansion, env);
+		if (ret == -1 || !*line)
 			return (0);
+		else if (ret == 0)
+		(*start)++;
 	}
 	return (1);
 }

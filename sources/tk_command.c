@@ -46,7 +46,9 @@ static int	cmd_redirection(t_token *current)
 		return (2);
 	else if (current->next && token(current, TK_IO_NUMBER) && cmd_fileorhere(current->next, 1))
 		return (3);
-	return (0);
+	if (current->next)
+		return (ft_printf("minishell: syntax error near unexpected token `%s'\n", current->next->s), -1);
+	return (ft_printf("minishell: syntax error near unexpected token `newline'\n"), -1);
 }
 
 int	tk_command(t_token *current)
@@ -54,24 +56,36 @@ int	tk_command(t_token *current)
 	int	ret;
 
 	ret = cmd_redirection(current);
+	if (ret == -1)
+		return (-1);
 	if (ret) // cmd_prefix
 	{
 		while (ret--)
 		{
 			current = current->next;
 			if (!ret)
+			{
 				ret = cmd_redirection(current);
+				if (ret == -1)
+					return (-1);
+			}
 		}
 		if (token(current, TK_WD_CMD_WORD)) // cmd_word
 			current = current->next;
 		ret = cmd_redirection(current); // cmd_suffix
-		if (!ret)
+		if (ret == -1)
+			return (-1);
+		else if (!ret)
 			ret = token(current, TK_WORD);
 		while (ret--)
 		{
 			current = current->next;
 			if (!ret)
+			{
 				ret = cmd_redirection(current);
+				if (ret == -1)
+					return (-1);
+			}
 			if (!ret)
 				ret = token(current, TK_WORD);
 		}
@@ -83,14 +97,20 @@ int	tk_command(t_token *current)
 	{
 		current = current->next;
 		ret = cmd_redirection(current); // cmd_suffix
-		if (!ret)
+		if (ret == -1)
+			return (-1);
+		else if (!ret)
 			ret = token(current, TK_WORD);
 		while (ret--)
 		{
 			current = current->next;
 			if (!ret)
+			{
 				ret = cmd_redirection(current);
-			if (!ret)
+				if (ret == -1)
+					return (-1);
+			}
+			else if (!ret)
 				ret = token(current, TK_WORD);
 		}
 		if (current && current->id == TK_PIPE) // end of command

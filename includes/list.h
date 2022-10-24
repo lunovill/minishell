@@ -36,5 +36,6 @@ t_cmd			*lst_init(t_token *init);
 int				lst_add(t_cmd *list, t_token *befor, t_token *add);
 int				lst_rmv(t_cmd *list, t_token *remove);
 int				lst_print(t_cmd *list);
+void    		lst_free(t_cmd *cmd);
 
 #endif
