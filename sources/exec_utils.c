@@ -6,7 +6,7 @@
 /*   By: skhali <skhali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 12:32:24 by skhali            #+#    #+#             */
-/*   Updated: 2022/10/22 17:37:45 by skhali           ###   ########.fr       */
+/*   Updated: 2022/10/26 16:56:34 by skhali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,4 +74,15 @@ char	**envlst_to_tab(t_env *env)
 	}
 	tab[i] = NULL;
 	return (tab);
+}
+
+t_command	*find_word(t_command *cmd)
+{
+	while (cmd)
+	{
+		if (cmd->id == 1)
+			return (cmd);
+		cmd = cmd->next;
+	}
+	return (NULL);
 }

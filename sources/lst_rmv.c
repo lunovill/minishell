@@ -32,6 +32,6 @@ int	lst_rmv(t_cmd *list, t_token *remove)
 			list->last = previous;
 	}
 	list->size--;
-//	free(remove);
+	free(remove);
 	return (0);
 }

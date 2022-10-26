@@ -6,7 +6,7 @@
 /*   By: skhali <skhali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 13:19:04 by skhali            #+#    #+#             */
-/*   Updated: 2022/10/22 12:48:29 by skhali           ###   ########.fr       */
+/*   Updated: 2022/10/26 17:32:00 by skhali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,32 +42,10 @@ void	handle_signals(void)
 	signal(SIGINT, ctrl_c);
 }
 
-
-
 void	ctrl_back_slash(int signum)
 {
 	(void)signum;
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	g_status = 131;
-}
-
-void	ctrl_c_exec(int signum)
-{
-	(void)signum;
-	ft_putchar_fd('\n', 2);
-	g_status = 130;
-}
-
-void	reset_signals(t_minishell *data)
-{
-	(void)data;
-	signal(SIGINT, SIG_IGN);
-	signal(SIGQUIT, SIG_IGN);
-}
-void	handle_signals_exec(t_minishell *data)
-{
-	(void)data;
-	signal(SIGQUIT, ctrl_back_slash);
-	signal(SIGINT, ctrl_c_exec);
 }

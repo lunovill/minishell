@@ -6,7 +6,7 @@
 /*   By: skhali <skhali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 15:59:54 by skhali            #+#    #+#             */
-/*   Updated: 2022/10/23 02:35:53 by skhali           ###   ########.fr       */
+/*   Updated: 2022/10/26 17:11:31 by skhali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,28 @@ int	create_hd(t_command **cmd)
 		hd->file = ft_strjoinms(hd->file, tmp);
 		free(tmp);
 	}
-	free(tmp);
-	free(limit);
-	(*cmd)->hd = hd;
+	return (free(tmp), free(limit), (*cmd)->hd = hd, 1);
+}
+
+int	here_doc_boucle(t_command **cmd, int *fd2, int *fd)
+{
+	if (!create_hd(cmd))
+	{
+		if (g_status == -42)
+			return (g_status = 130, dup2(*fd2, 0), close(*fd2),
+				handle_signals(), 0);
+		return (close(*fd2), handle_signals(), 0);
+	}
+	handle_signals();
+	(*cmd)->hd->filename = get_filename();
+	if (!(*cmd)->hd->filename)
+		return (free((*cmd)->hd), close(*fd2), 0);
+	*fd = open((*cmd)->hd->filename, O_CREAT | O_RDWR | O_TRUNC,
+			0000644);
+	if (*fd < 0)
+		return (free((*cmd)->hd), close(*fd), close(*fd2), 0);
+	write(*fd, (*cmd)->hd->file, ft_strlen((*cmd)->hd->file));
+	close(*fd);
 	return (1);
 }
 
@@ -105,23 +124,8 @@ int	here_doc(t_minishell *ms)
 		{
 			if (cmd->id == 10)
 			{
-				if (!create_hd(&cmd))
-				{
-					if (g_status == -42)
-						return (g_status = 130, dup2(fd2, 0), close(fd2),
-							handle_signals(), 0);
-					return (close(fd2), handle_signals(), 0);
-				}
-				handle_signals();
-				cmd->hd->filename = get_filename();
-				if (!cmd->hd->filename)
-					return (free(cmd->hd), close(fd2), 0);
-				fd = open(cmd->hd->filename, O_CREAT | O_RDWR | O_TRUNC,
-						0000644);
-				if (fd < 0)
-					return (free(cmd->hd), close(fd), close(fd2), 0);
-				write(fd, cmd->hd->file, ft_strlen(cmd->hd->file));
-				close(fd);
+				if (!here_doc_boucle(&cmd, &fd2, &fd))
+					return (0);
 			}
 			else
 				cmd->hd = NULL;
@@ -129,6 +133,5 @@ int	here_doc(t_minishell *ms)
 		}
 		partition = partition->next;
 	}
-	close(fd2);
-	return (1);
+	return (close(fd2), 1);
 }
