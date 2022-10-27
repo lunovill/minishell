@@ -6,7 +6,7 @@
 /*   By: skhali <skhali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 17:26:40 by skhali            #+#    #+#             */
-/*   Updated: 2022/10/26 18:24:10 by skhali           ###   ########.fr       */
+/*   Updated: 2022/10/27 15:54:44 by skhali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_command	*lst_init_command(char *str, int id)
 	list = malloc(sizeof(*list));
 	if (list == NULL)
 		return (NULL);
-	list->cmds = ft_strdup(str);
+	list->cmds = delete_quotes(ft_strdup(str));
 	list->cmds_split = ft_split(str, ' ');
 	list->id = id;
 	list->hd = NULL;
@@ -47,8 +47,8 @@ int	is_notspace(char *str)
 
 t_minishell	*init_start(char **env, int argc, char **argv)
 {
-	t_minishell *ms;
-	
+	t_minishell	*ms;
+
 	(void)argv;
 	(void)argc;
 	ms = malloc(sizeof(t_minishell));
