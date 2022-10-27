@@ -52,8 +52,8 @@ int	tk_delimiter(char *line, t_cmd *cmd, t_token *token)
 			/* Si le caractère précédent a été utilisé dans le cadre d'un opérateur
 			et que le caractère actuel ne peut pas être utilisé avec les caractères actuels pour former un opérateur,
 			l'opérateur contenant le caractère précédent doit être délimité.*/
-			else if (oprtr && !tk_isoprtr(line + i, j - i))
-				break ;
+			//else if (oprtr && !tk_isoprtr(line + i, j - i))
+			//	break ;
 			/* Si le caractère actuel est un guillemet simple ou un guillemet double
 			et qu'il n'est pas entre guillemets,
 			cela affectera les guillemets pour les caractères suivants jusqu'à la fin du texte entre guillemets.
@@ -74,7 +74,6 @@ int	tk_delimiter(char *line, t_cmd *cmd, t_token *token)
 			else if (!quote && CheckOprtr(line[j]))
 				break ;
 			/* Si le caractère courant est un <newline> sans guillemets, le jeton courant doit être délimité.*/
-
 			/* Si le caractère courant est un <blank> sans guillemets,
 			le jeton contenant le caractère précédent est délimité et le caractère courant doit être rejeté.*/
 			else if (!quote && CheckBlank(line[j]))
