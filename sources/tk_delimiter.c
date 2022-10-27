@@ -44,6 +44,7 @@ int	tk_delimiter(char *line, t_cmd *cmd, t_token *token)
 	int				oprtr;
 	int				quote;
 	int				expns;
+	int				ret;
 	unsigned int	i;
 	unsigned int	j;
 
@@ -69,7 +70,7 @@ int	tk_delimiter(char *line, t_cmd *cmd, t_token *token)
 				j++;
 				continue ;
 			}
-			else if (oprtr && !tk_isoprtr(line + i, j - i))
+			else if (oprtr && !quote && !tk_isoprtr(line + i, j - i))
 				break ;
 			else if (!quote && check_char(line[j], 1))
 				quote = line[j];
@@ -77,9 +78,10 @@ int	tk_delimiter(char *line, t_cmd *cmd, t_token *token)
 				quote = 0;
 			else if (quote != CHAR_SGL_QUOTE && expns)
 			{
-				if (tk_expansion(&line, &j, cmd->env))
+				ret = tk_expansion(&line, &j, cmd->env);
+				if (ret == 1)
 					continue ;
-				else
+				else if (ret == -1)
 					return (-1);
 			}
 			else if (!quote && check_char(line[j], 0))

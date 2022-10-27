@@ -83,18 +83,17 @@ int	tk_expansion(char **line, unsigned int *start, char **env)
 				&& ft_strichr(STRG_OPERATOR, (*line)[end] == -1))
 			end++;
 		if (end == *start)
-			return (1);
+			return (0);
 	}
 	else
 		end++;
 	expansion = ft_strndup(*line + *start, end - *start);
 	if (!expansion)
-		return (0);
+		return (-1);
 	(*start)--;
 	ret = tk_add_expansion(&*line, *start, end,
 			tk_search_expansion(expansion, env));
 	if (ret == -1 || !*line)
-		return (0);
-	ft_printf("[%c]\n\n", (*line)[*start]);
+		return (-1);
 	return (1);
 }
