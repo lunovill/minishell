@@ -6,7 +6,7 @@
 #    By: skhali <skhali@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/15 05:19:02 by lunovill          #+#    #+#              #
-#    Updated: 2022/10/24 03:18:21 by skhali           ###   ########.fr        #
+#    Updated: 2022/10/26 18:25:01 by skhali           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ SRC_FILES =	lst_add\
 				lst_new\
 				lst_print\
 				lst_rmv\
+				lst_free \
 				main\
 				tk_command\
 				tk_delimiter\
@@ -29,6 +30,7 @@ SRC_FILES =	lst_add\
 				cd \
 				echo \
 				export \
+				export_utils \
 				pwd \
 				unset \
 				exit \
@@ -40,9 +42,12 @@ SRC_FILES =	lst_add\
 				env_mangement \
 				free_minishell \
 				init_minishell \
+				init_minishell_utils \
 				lst_utils \
 				exec_utils \
+				exec_utils2 \
 				signals \
+				signals_utils \
 
 				
 

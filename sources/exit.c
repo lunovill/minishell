@@ -6,7 +6,7 @@
 /*   By: skhali <skhali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 13:08:21 by skhali            #+#    #+#             */
-/*   Updated: 2022/10/23 14:52:23 by skhali           ###   ########.fr       */
+/*   Updated: 2022/10/26 16:57:44 by skhali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,17 +31,19 @@ int	check_exit_numeric(char *str)
 //vérifier si une seule commande
 int	built_in_exit(t_minishell *ms, char **cmd, int child)
 {
-	unsigned char	code;
+	int	code;
 
 	if (!child)
 		ft_putstr_fd("exit\n", 1);
 	if (size_chartab(cmd) == 1)
-		return (free_minishell(ms), free_env(ms->env), free(ms), exit(g_status), g_status);
+		return (free_minishell(ms), free_env(ms->env), free(ms), exit(g_status),
+			g_status);
 	if (check_exit_numeric(cmd[1]))
 		return (ft_putstr_fd("exit: numeric argument required\n", 2),
 			exit(2), 2);
 	if (size_chartab(cmd) > 2)
 		return (ft_putstr_fd("exit: too many arguments\n", 2), 1);
 	code = ft_atoi(cmd[1]);
-	return (free_minishell(ms), free_env(ms->env), free(ms), exit((int)code), 0);
+	return (free_minishell(ms), free_env(ms->env), free(ms),
+		exit(code), 0);
 }

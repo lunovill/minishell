@@ -1,25 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lst_free.c                                         :+:      :+:    :+:   */
+/*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lunovill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: skhali <skhali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/23 23:02:05 by lunovill          #+#    #+#             */
-/*   Updated: 2022/10/23 23:02:06 by lunovill         ###   ########.fr       */
+/*   Created: 2022/10/26 16:58:21 by skhali            #+#    #+#             */
+/*   Updated: 2022/10/26 16:59:08 by skhali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "list.h"
-
-void    lst_free(t_cmd *cmd)
+//si il exite deja, le reset
+// sinon l'ajouter
+//creer une fonction het var et get content
+//gerer l'erreur not valid in this context
+int	get_var_length(char *env)
 {
-    if (cmd)
-    {
-        if (cmd->size)
-            while (cmd->first)
-                lst_rmv(cmd, cmd->first);
-        free(cmd);
-    }
-    cmd = NULL;
+	int	i;
+
+	i = 0;
+	while (env[i] && env[i] != '=')
+		i++;
+	return (i);
 }

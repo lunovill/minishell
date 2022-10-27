@@ -6,7 +6,7 @@
 /*   By: skhali <skhali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 20:05:09 by skhali            #+#    #+#             */
-/*   Updated: 2022/10/21 12:58:53 by skhali           ###   ########.fr       */
+/*   Updated: 2022/10/27 15:51:25 by skhali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	built_in_echo(char **cmds)
 	}
 	while (cmds[i])
 	{
-		ft_putstr_fd(delete_quotes(cmds[i]), 1);
+		ft_putstr_fd(cmds[i], 1);
 		if (cmds[i + 1])
 			ft_putchar_fd(' ', 1);
 		i++;

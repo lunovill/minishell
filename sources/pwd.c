@@ -6,7 +6,7 @@
 /*   By: skhali <skhali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 12:26:34 by skhali            #+#    #+#             */
-/*   Updated: 2022/10/23 15:09:54 by skhali           ###   ########.fr       */
+/*   Updated: 2022/10/26 17:30:14 by skhali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,11 @@ char	*var_checker(t_env *env, char *str)
 	return (NULL);
 }
 
+void	longline(void)
+{
+	ft_putstr_fd("pwd: the current directory cannot be read\n", 2);
+}
+
 int	built_in_pwd(t_env *env, char **cmd)
 {
 	char	buf[PATH_MAX + 1];
@@ -46,13 +51,12 @@ int	built_in_pwd(t_env *env, char **cmd)
 		{
 			str = get_content(str);
 			if (!str)
-				return (ft_putstr_fd("pwd : the current directory cannot be read\n", 2),
-			1);
+				return (longline(), 1);
 			return (ft_printf("%s\n", ++str), 0);
 		}
 		else
-			return (ft_putstr_fd("pwd : the current directory cannot be read\n", 2),
-			1);
+			return (ft_putstr_fd("pwd : the current directory cannot be read\n"
+					, 2), 1);
 	}
 	ft_printf("%s\n", buf);
 	return (0);

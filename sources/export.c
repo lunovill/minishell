@@ -6,7 +6,7 @@
 /*   By: skhali <skhali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 20:05:01 by skhali            #+#    #+#             */
-/*   Updated: 2022/10/23 14:58:06 by skhali           ###   ########.fr       */
+/*   Updated: 2022/10/26 17:00:04 by skhali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,20 +39,6 @@ int	name_checker(char *cmd)
 		i++;
 	}
 	return (1);
-}
-
-//si il exite deja, le reset
-// sinon l'ajouter
-//creer une fonction het var et get content
-//gerer l'erreur not valid in this context
-int	get_var_length(char *env)
-{
-	int	i;
-
-	i = 0;
-	while (env[i] && env[i] != '=')
-		i++;
-	return (i);
 }
 
 int	built_in_export_p2(t_env *env, char *cmd)
@@ -92,8 +78,6 @@ int	built_in_export(t_env *env, char **cmd)
 			ft_putstr_fd(": not a valid identifier\n", 2);
 			exit_stat = 1;
 		}
-		//else if (!ft_strchr(cmd[i], '='))
-		//	return (0);
 		else
 			built_in_export_p2(env, cmd[i]);
 	}

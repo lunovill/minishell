@@ -6,7 +6,7 @@
 /*   By: skhali <skhali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 20:05:18 by skhali            #+#    #+#             */
-/*   Updated: 2022/10/23 14:01:36 by skhali           ###   ########.fr       */
+/*   Updated: 2022/10/26 16:08:26 by skhali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,7 @@ int	built_in_cd_p2(t_env *env, char *cmd)
 	if (!str)
 		str = get_content(var_checker(env, "PWD"));
 	str = ft_strjoin("PWD=", str);
-	built_in_export_p2(env, str);
-	free(str);
-	return (0);
+	return (built_in_export_p2(env, str), free(str), 0);
 }
 
 int	built_in_cd(t_env *env, char **cmd)

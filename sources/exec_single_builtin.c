@@ -6,7 +6,7 @@
 /*   By: skhali <skhali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 22:17:46 by skhali            #+#    #+#             */
-/*   Updated: 2022/10/21 13:04:13 by skhali           ###   ########.fr       */
+/*   Updated: 2022/10/26 16:55:15 by skhali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,20 @@ int	opening_fd(t_command *token)
 	return (-1);
 }
 
+void	redirections_pt2(int *fd_in, int *fd_out)
+{
+	if (*fd_in > 0)
+	{
+		dup2(*fd_in, 0);
+		close(*fd_in);
+	}
+	if (*fd_out > 0)
+	{
+		dup2(*fd_out, 1);
+		close(*fd_out);
+	}
+}
+
 int	redirections(int fd_in, int fd_out, t_command	*cmd)
 {
 	while (cmd)
@@ -64,7 +78,7 @@ int	redirections(int fd_in, int fd_out, t_command	*cmd)
 				close(fd_in);
 			fd_in = opening_fd(cmd);
 			if (fd_in == -1)
-				return (-1);
+				return (ft_putstr_fd(cmd->cmds, 2), -1);
 		}
 		else if (cmd->id == 11 || cmd->id == 9)
 		{
@@ -76,28 +90,8 @@ int	redirections(int fd_in, int fd_out, t_command	*cmd)
 		}
 		cmd = cmd->next;
 	}
-	if (fd_in > 0)
-	{
-		dup2(fd_in, 0);
-		close(fd_in);
-	}
-	if (fd_out > 0)
-	{
-		dup2(fd_out, 1);
-		close(fd_out);
-	}
+	redirections_pt2(&fd_in, &fd_out);
 	return (1);
-}
-
-t_command	*find_word(t_command *cmd)
-{
-	while (cmd)
-	{
-		if (cmd->id == 1)
-			return (cmd);
-		cmd = cmd->next;
-	}
-	return (NULL);
 }
 
 //vérifier si il y a des redirections
@@ -116,8 +110,8 @@ int	exec_single_builtin(t_minishell *ms)
 	fd[0] = dup(0);
 	fd[1] = dup(1);
 	cmd = ms->partition->cmds;
-	if (!redirections(fd_in, fd_out, cmd))
-		return (-1);
+	if (redirections(fd_in, fd_out, cmd) == -1)
+		return (ft_putstr_fd(": No such file or directory\n", 2), -1);
 	cmd = find_word(ms->partition->cmds);
 	if (cmd)
 		g_status = builtins(ms, cmd->cmds_split, 0);

@@ -63,6 +63,8 @@ static int	cmd_redirection(t_token *current)
 	if (current->next)
 		return (0);
 	return (0);
+	// 	return (ft_printf("minishell: syntax error near unexpected token `%s'\n", current->next->s), -1);
+	// return (ft_printf("minishell: syntax error near unexpected token `newline'\n"), -1);
 }
 
 static int	tk_command2(t_token *current, int ret)

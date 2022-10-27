@@ -1,26 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lst_new.c                                          :+:      :+:    :+:   */
+/*   signals_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: skhali <skhali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/28 01:34:24 by lunovill          #+#    #+#             */
-/*   Updated: 2022/10/26 17:26:07 by skhali           ###   ########.fr       */
+/*   Created: 2022/10/26 17:31:15 by skhali            #+#    #+#             */
+/*   Updated: 2022/10/26 17:31:54 by skhali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "list.h"
 
-t_token	*lst_new(void)
+void	ctrl_c_exec(int signum)
 {
-	t_token	*new;
+	(void)signum;
+	ft_putchar_fd('\n', 2);
+	g_status = 130;
+}
 
-	new = malloc(sizeof(*new));
-	if (new == NULL)
-		return (NULL);
-	new->id = 0;
-	new->previous = NULL;
-	new->next = NULL;
-	return (new);
+void	reset_signals(t_minishell *data)
+{
+	(void)data;
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
+}
+
+void	handle_signals_exec(t_minishell *data)
+{
+	(void)data;
+	signal(SIGQUIT, ctrl_back_slash);
+	signal(SIGINT, ctrl_c_exec);
 }
