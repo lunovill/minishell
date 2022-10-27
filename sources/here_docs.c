@@ -75,7 +75,7 @@ int	create_hd(t_command **cmd)
 	while (1)
 	{
 		ft_putchar_fd('>', 1);
-		tmp = get_next_line(0);
+		get_next_line(0, &tmp, 1);
 		if (!tmp)
 			return (free(limit), free(hd->file), free(hd), 0);
 		if (!ft_strcmp(limit, tmp))
