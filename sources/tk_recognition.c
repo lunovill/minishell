@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tk_recognition.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lunovill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/24 21:57:04 by lunovill          #+#    #+#             */
+/*   Updated: 2022/10/24 21:57:07 by lunovill         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static int	tk_operator(t_cmd *cmd)
@@ -19,7 +31,8 @@ static int	tk_operator(t_cmd *cmd)
 			token->id = TK_DGREAT;
 		else if (!ft_strcmp(STRG_PIPE, token->s))
 			token->id = TK_PIPE;
-		if (token->id && ((token->previous && token->previous->id) || !token->next))
+		if (token->id && ((token->previous && token->previous->id)
+				|| !token->next))
 		{
 			ret--;
 			break ;
@@ -38,7 +51,7 @@ static int	tk_operator(t_cmd *cmd)
 
 static int	tk_pipe(t_token *current)
 {
-	while(current) // pipe_sequence
+	while (current) // pipe_sequence
 	{
 		if (current->id != TK_PIPE)
 		{
