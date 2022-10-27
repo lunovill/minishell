@@ -6,7 +6,7 @@
 /*   By: skhali <skhali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 13:14:35 by skhali            #+#    #+#             */
-/*   Updated: 2022/10/26 17:21:19 by skhali           ###   ########.fr       */
+/*   Updated: 2022/10/26 20:09:45 by skhali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,16 @@ t_command	*cmds_parsing(t_token *token)
 void	pipeline_initp2(t_partition **pipeline, t_command **word_cmd,
 	t_command **other_cmds)
 {
+	int	i;
+
+	i = 0;
 	(*word_cmd)->id = 1;
 	(*word_cmd)->cmds_split = ft_split((*word_cmd)->cmds, ' ');
+	while ((*word_cmd)->cmds_split[i])
+	{
+		(*word_cmd)->cmds_split[i] = delete_quotes((*word_cmd)->cmds_split[i]);
+		i++;
+	}
 	(*word_cmd)->hd = NULL;
 	(*word_cmd)->next = (*other_cmds);
 	(*pipeline)->cmds = (*word_cmd);
