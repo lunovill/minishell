@@ -106,7 +106,6 @@ int	tk_delimiter(char *line, t_cmd *cmd, t_token *token)
 		if (quote)
 			return (ft_putstr_fd("minishell: syntax error token `quote' not closed\n", 2), -1);
 		token->s = ft_strndup(line + i, j - i);
-ft_printf("[%s]\n", token->s);
 		if (token != cmd->first)
 			lst_add(cmd, cmd->last, token);
 		while (line[j] && check_char(line[j], 3))
