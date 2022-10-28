@@ -6,7 +6,7 @@
 /*   By: skhali <skhali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 20:05:01 by skhali            #+#    #+#             */
-/*   Updated: 2022/10/26 17:00:04 by skhali           ###   ########.fr       */
+/*   Updated: 2022/10/29 01:26:15 by skhali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	built_in_export_p2(t_env *env, char *cmd)
 
 //si pas de = ajout à export
 //sans argument renvois une liste
-int	built_in_export(t_env *env, char **cmd)
+int	built_in_export(t_minishell *ms, t_env *env, char **cmd)
 {
 	int	i;
 	int	exit_stat;
@@ -81,5 +81,7 @@ int	built_in_export(t_env *env, char **cmd)
 		else
 			built_in_export_p2(env, cmd[i]);
 	}
+	free(ms->char_env);
+	ms->char_env = envlst_to_tab(ms->env);
 	return (exit_stat);
 }

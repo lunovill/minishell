@@ -6,7 +6,7 @@
 /*   By: skhali <skhali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/28 01:25:23 by lunovill          #+#    #+#             */
-/*   Updated: 2022/10/26 18:41:34 by skhali           ###   ########.fr       */
+/*   Updated: 2022/10/29 01:27:09 by skhali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ char			*var_checker(t_env *env, char *str);
 int				built_in_pwd(t_env *env, char **cmd);
 int				built_in_env(t_env *env, char **cmd);
 int				built_in_cd(t_env *env, char **cmd);
-int				built_in_export(t_env *env, char **cmd);
+int				built_in_export(t_minishell *ms, t_env *env, char **cmd);
 int				built_in_unset(t_env **env, char **cmd);
 int				built_in_echo(char **cmds);
 int				built_in_exit(t_minishell *ms, char **cmd, int child);
