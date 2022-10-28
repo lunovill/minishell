@@ -73,11 +73,22 @@ int	tk_delimiter(char *line, t_cmd *cmd, t_token *token)
 			else if (oprtr && !quote && !tk_isoprtr(line + i, j - i))
 				break ;
 			else if (!quote && check_char(line[j], 1))
+			{
 				quote = line[j];
+				if (expns)
+				{
+					ret = tk_expansion(&line, &j, cmd->env);
+					if (ret == 1)
+						continue ;
+					else if (ret == -1)
+						return (-1);
+				}
+			}
 			else if (quote && line[j] == quote)
 				quote = 0;
 			else if (quote != CHAR_SGL_QUOTE && expns)
 			{
+				expns = 0;
 				ret = tk_expansion(&line, &j, cmd->env);
 				if (ret == 1)
 					continue ;

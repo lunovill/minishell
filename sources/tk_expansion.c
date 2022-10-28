@@ -39,14 +39,15 @@ static char	*tk_search_expansion(const char *expansion, char **env)
 }
 
 static int	tk_add_expansion(char **line, unsigned int start,
-unsigned int end, char *expansion)
+unsigned int end, char *expansion, int set)
 {
 	char	*new;
 
 	new = ft_strndup(*line, start);
 	if (!new)
 		return (-1);
-	new = (ft_strjoinf(new, "\"", 1));
+	if (set)
+		new = (ft_strjoinf(new, "\"", 1));
 	if (!new)
 		return (-1);
 	if (expansion)
@@ -55,7 +56,8 @@ unsigned int end, char *expansion)
 		if (!new)
 			return (-1);
 	}
-	new = (ft_strjoinf(new, "\"", 1));
+	if (set)
+		new = (ft_strjoinf(new, "\"", 1));
 	if (!new)
 		return (-1);
 	new = ft_strjoinf(new, *line + end, 1);
@@ -72,6 +74,12 @@ int	tk_expansion(char **line, unsigned int *start, char **env)
 	int				ret;
 
 	end = *start;
+	if ((*line)[end] == CHAR_SGL_QUOTE || (*line)[end] == CHAR_DBL_QUOTE)
+	{
+		(*start)--;
+		tk_add_expansion(&*line, *start, end, NULL, 0);
+		return (0);
+	}
 	if ((*line)[end] != '?')
 	{
 		while ((*line)[end] && (*line)[end] != CHAR_EXPANSION
@@ -92,7 +100,7 @@ int	tk_expansion(char **line, unsigned int *start, char **env)
 		return (-1);
 	(*start)--;
 	ret = tk_add_expansion(&*line, *start, end,
-			tk_search_expansion(expansion, env));
+			tk_search_expansion(expansion, env), 1);
 	if (ret == -1 || !*line)
 		return (-1);
 	return (1);

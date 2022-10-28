@@ -21,7 +21,6 @@ SRC_FILES =	lst_add\
 				lst_new\
 				lst_print\
 				lst_rmv\
-				lst_free \
 				main\
 				tk_command\
 				tk_delimiter\
