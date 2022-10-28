@@ -6,7 +6,7 @@
 /*   By: skhali <skhali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 13:14:35 by skhali            #+#    #+#             */
-/*   Updated: 2022/10/26 20:09:45 by skhali           ###   ########.fr       */
+/*   Updated: 2022/10/28 20:32:57 by skhali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*word_parsing(t_token *token)
 				|| (token->id == 3)) && (is_notspace(token->s)))
 		{
 			str = ft_strjoinms(str, token->s);
-			str = ft_strjoinms(str, " ");
+			str = ft_strjoinms(str, "\n");
 			i = 1;
 		}
 		token = token->next;
@@ -60,7 +60,7 @@ void	pipeline_initp2(t_partition **pipeline, t_command **word_cmd,
 
 	i = 0;
 	(*word_cmd)->id = 1;
-	(*word_cmd)->cmds_split = ft_split((*word_cmd)->cmds, ' ');
+	(*word_cmd)->cmds_split = ft_split((*word_cmd)->cmds, '\n');
 	while ((*word_cmd)->cmds_split[i])
 	{
 		(*word_cmd)->cmds_split[i] = delete_quotes((*word_cmd)->cmds_split[i]);
