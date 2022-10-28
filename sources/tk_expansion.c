@@ -80,7 +80,12 @@ int	tk_expansion(char **line, unsigned int *start, char **env)
 		tk_add_expansion(&*line, *start, end, NULL, 0);
 		return (0);
 	}
-	if ((*line)[end] != '?')
+	else if (ft_isdigit((*line)[end]))
+	{
+		while (ft_isdigit((*line)[++end]))
+			;
+	}
+	else if ((*line)[end] != '?')
 	{
 		while ((*line)[end] && (*line)[end] != CHAR_EXPANSION
 				&& (*line)[end] != CHAR_H_TAB
@@ -88,7 +93,7 @@ int	tk_expansion(char **line, unsigned int *start, char **env)
 				&& (*line)[end] != CHAR_SPACE
 				&& (*line)[end] != CHAR_DBL_QUOTE
 				&& (*line)[end] != CHAR_SGL_QUOTE
-				&& ft_strichr(STRG_OPERATOR, (*line)[end] == -1))
+				&& ft_strichr(STRG_OPERATOR, (*line)[end]) == -1)
 			end++;
 		if (end == *start)
 			return (0);

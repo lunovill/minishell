@@ -86,7 +86,7 @@ int	tk_delimiter(char *line, t_cmd *cmd, t_token *token)
 			}
 			else if (quote && line[j] == quote)
 				quote = 0;
-			else if (quote != CHAR_SGL_QUOTE && expns)
+			else if (quote != CHAR_SGL_QUOTE && expns && !check_char(line[j], 0))
 			{
 				expns = 0;
 				ret = tk_expansion(&line, &j, cmd->env);
@@ -106,6 +106,7 @@ int	tk_delimiter(char *line, t_cmd *cmd, t_token *token)
 		if (quote)
 			return (ft_putstr_fd("minishell: syntax error token `quote' not closed\n", 2), -1);
 		token->s = ft_strndup(line + i, j - i);
+ft_printf("[%s]\n", token->s);
 		if (token != cmd->first)
 			lst_add(cmd, cmd->last, token);
 		while (line[j] && check_char(line[j], 3))
