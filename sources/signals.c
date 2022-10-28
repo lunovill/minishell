@@ -6,7 +6,7 @@
 /*   By: skhali <skhali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 13:19:04 by skhali            #+#    #+#             */
-/*   Updated: 2022/10/26 17:32:00 by skhali           ###   ########.fr       */
+/*   Updated: 2022/10/29 01:54:45 by skhali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,6 @@ static void	ctrl_c_heredoc(int sig)
 	close(0);
 	printf("\n");
 	g_status = -42;
-}
-
-void	ctrl_c(int sig)
-{
-	(void)sig;
-	g_status = 130;
-	ft_putstr_fd("\n", 2);
-	rl_replace_line("", 0);
-	rl_on_new_line();
-	rl_redisplay();
 }
 
 void	handle_signals_heredoc(void)
@@ -42,10 +32,3 @@ void	handle_signals(void)
 	signal(SIGINT, ctrl_c);
 }
 
-void	ctrl_back_slash(int signum)
-{
-	(void)signum;
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	g_status = 131;
-}
