@@ -6,7 +6,7 @@
 /*   By: skhali <skhali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 15:59:54 by skhali            #+#    #+#             */
-/*   Updated: 2022/10/27 15:55:57 by skhali           ###   ########.fr       */
+/*   Updated: 2022/10/29 01:33:36 by skhali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	create_hd(t_command **cmd)
 	while (1)
 	{
 		ft_putchar_fd('>', 1);
-		get_next_line(0, &tmp, 1);
+		tmp = get_next_line(0);
 		if (!tmp)
 			return (free(limit), free(hd->file), free(hd), 0);
 		if (!ft_strcmp(limit, tmp))
