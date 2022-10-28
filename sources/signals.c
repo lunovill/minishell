@@ -6,7 +6,7 @@
 /*   By: skhali <skhali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 13:19:04 by skhali            #+#    #+#             */
-/*   Updated: 2022/10/29 01:57:32 by skhali           ###   ########.fr       */
+/*   Updated: 2022/10/29 01:58:44 by skhali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,3 +42,9 @@ void	handle_signals(void)
 	signal(SIGINT, ctrl_c);
 }
 
+void	reset_signals(t_minishell *data)
+{
+	(void)data;
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
+}

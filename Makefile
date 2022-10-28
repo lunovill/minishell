@@ -6,7 +6,7 @@
 #    By: skhali <skhali@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/15 05:19:02 by lunovill          #+#    #+#              #
-#    Updated: 2022/10/26 18:25:01 by skhali           ###   ########.fr        #
+#    Updated: 2022/10/29 01:59:06 by skhali           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,6 @@ SRC_FILES =	lst_add\
 				exec_utils \
 				exec_utils2 \
 				signals \
-				signals_utils \
 
 				
 
