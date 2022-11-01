@@ -69,7 +69,7 @@ LIB_DIR = libft
  #=============================================================================#
 
 CC = clang
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 CDFLAGS = -MMD -MP
 CIFLAGS = -Iincludes -I$(LIB_DIR)/includes
 CLFLAGS = -lreadline -L$(LIB_DIR) -lft

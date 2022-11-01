@@ -6,7 +6,7 @@
 /*   By: lunovill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 21:57:04 by lunovill          #+#    #+#             */
-/*   Updated: 2022/10/24 21:57:07 by lunovill         ###   ########.fr       */
+/*   Updated: 2022/11/01 19:21:27 by lunovill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,13 @@ static int	tk_operator(t_cmd *cmd)
 		else if (!ft_strcmp(STRG_PIPE, token->s))
 			token->id = TK_PIPE;
 		if (token->id && ((token->previous && token->previous->id)
-				|| !token->next))
+					|| !token->next))
 		{
-			ret--;
-			break ;
+			if (token->previous->id != TK_PIPE)
+			{
+				ret--;
+				break ;
+			}
 		}
 		token = token->next;
 	}
@@ -64,6 +67,59 @@ static int	tk_pipe(t_token *current)
 	return (1);
 }
 
+static void ft_split_cmd(t_cmd *cmd, t_token *current, ssize_t i)
+{
+	t_token	*token;
+	t_token	*new;
+	unsigned int j;
+
+	if (i == -1)
+		return ;
+	token = lst_new();
+	token->s = ft_strndup(current->s, i);
+	token->id = TK_WD_CMD_NAME;
+	lst_add(cmd, current, token);
+	while (current->s[i])
+	{
+		while (current->s[i] && current->s[i] == CHAR_H_TAB
+				&& current->s[i] == CHAR_V_TAB
+				&& current->s[i] == CHAR_SPACE)
+			i++;
+		j = i;
+		while (current->s[j] && current->s[j] != CHAR_H_TAB
+				&& current->s[j] != CHAR_V_TAB
+				&& current->s[j] != CHAR_SPACE)
+			j++;
+		if (current->s[i])
+		{
+			new = lst_new();
+			new->s = ft_strndup(current->s + i, j - i);
+			new->id = TK_WORD;
+			lst_add(cmd, token, new);
+			token = new;
+		}
+	}
+	lst_rmv(cmd, current);
+	lst_print(cmd);
+	exit(42);
+}
+static void	tk_split_cmd(t_cmd *cmd)
+{
+	t_token	*current;
+
+	current = cmd->first;
+	while (current)
+	{
+		if (current->id == TK_WD_CMD_NAME)
+		{
+			ft_split_cmd(cmd, current, ft_strichr(current->s, CHAR_H_TAB));
+			ft_split_cmd(cmd, current, ft_strichr(current->s, CHAR_V_TAB));
+			ft_split_cmd(cmd, current, ft_strichr(current->s, CHAR_SPACE));
+		}
+		current = current->next;
+	}
+}
+
 t_cmd	*tk_recognition(char *line, char **env)
 {
 	t_token			*first;
@@ -82,5 +138,6 @@ t_cmd	*tk_recognition(char *line, char **env)
 		return (lst_free(cmd), NULL);
 	if (!tk_pipe(cmd->last))
 		return (lst_free(cmd), NULL);
+	tk_split_cmd(cmd);
 	return (cmd);
 }
