@@ -12,16 +12,17 @@
 
 #include "minishell.h"
 
-void	cmd_pathp2(char **tmp, char **command, char **paths, char *cmd)
+void	cmd_pathp2(char **command, char **paths, char *cmd)
 {
-	*tmp = ft_strjoin(*paths, "/");
-	*command = ft_strjoin(*tmp, cmd);
+	char	*tmp;
+
+	tmp = ft_strjoin(*paths, "/");
+	*command = ft_strjoin(tmp, cmd);
 	free(tmp);
 }
 
 char	*cmd_path(char **paths, char *cmd)
 {
-	char	*tmp;
 	char	*command;
 
 	if (!cmd[0])
@@ -34,7 +35,7 @@ char	*cmd_path(char **paths, char *cmd)
 			return (NULL);
 		while (*paths)
 		{
-			cmd_pathp2(&tmp, &command, paths, cmd);
+			cmd_pathp2(&command, paths, cmd);
 			if (access(command, 0) == 0)
 				return (command);
 			free(command);
