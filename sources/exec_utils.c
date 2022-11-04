@@ -6,11 +6,18 @@
 /*   By: skhali <skhali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 12:32:24 by skhali            #+#    #+#             */
-/*   Updated: 2022/10/26 20:06:02 by skhali           ###   ########.fr       */
+/*   Updated: 2022/11/04 17:05:04 by skhali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	cmd_pathp2(char **tmp, char **command, char **paths, char *cmd)
+{
+	*tmp = ft_strjoin(*paths, "/");
+	*command = ft_strjoin(*tmp, cmd);
+	free(tmp);
+}
 
 char	*cmd_path(char **paths, char *cmd)
 {
@@ -27,9 +34,7 @@ char	*cmd_path(char **paths, char *cmd)
 			return (NULL);
 		while (*paths)
 		{
-			tmp = ft_strjoin(*paths, "/");
-			command = ft_strjoin(tmp, cmd);
-			free(tmp);
+			cmd_pathp2(&tmp, &command, paths, cmd);
 			if (access(command, 0) == 0)
 				return (command);
 			free(command);

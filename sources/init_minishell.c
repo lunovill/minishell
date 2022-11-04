@@ -6,7 +6,7 @@
 /*   By: skhali <skhali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 13:14:35 by skhali            #+#    #+#             */
-/*   Updated: 2022/10/28 20:32:57 by skhali           ###   ########.fr       */
+/*   Updated: 2022/11/04 17:22:20 by skhali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,19 @@ void	pipeline_initp2(t_partition **pipeline, t_command **word_cmd,
 	(*pipeline)->next = NULL;
 }
 
-t_partition	*pipeline_init(t_token *token)
+void	pipeline_bis(t_minishell *ms, t_command	**word_cmd,
+	t_partition	**pipeline)
+{
+	*pipeline = malloc(sizeof(t_partition));
+	if (!*pipeline)
+		return (free(ms->paths), free(ms->cmds), free(ms), exit(1));
+	*word_cmd = malloc(sizeof(t_command));
+	if (!*word_cmd)
+		return (free(*pipeline), free(ms->paths), free(ms->cmds), free(ms),
+			exit(1));
+}
+
+t_partition	*pipeline_init(t_token *token, t_minishell *ms)
 {
 	t_partition	*pipeline;
 	t_command	*word_cmd;
@@ -81,8 +93,7 @@ t_partition	*pipeline_init(t_token *token)
 
 	first = token;
 	other_cmds = NULL;
-	pipeline = malloc(sizeof(t_partition));
-	word_cmd = malloc(sizeof(t_command));
+	pipeline_bis(ms, &word_cmd, &pipeline);
 	word_cmd->cmds = word_parsing(token);
 	token = first;
 	other_cmds = cmds_parsing(token);
@@ -111,16 +122,14 @@ t_minishell	*init_minishell(t_minishell *ms, t_cmd *cmd)
 	pipelist = NULL;
 	parsing_paths(ms->env, ms);
 	token = cmd->first;
-	if (cmd->last->id == 12)
-		return (ft_putstr("erreur de syntax\n"), NULL);
 	if (!ms->nb_pipes)
-		pipelist = pipeline_init(token);
+		pipelist = pipeline_init(token, ms);
 	while (token && (i <= ms->nb_pipes) && ms->nb_pipes)
 	{
 		if (i == 0)
-			ft_lstadd_front2(&pipelist, pipeline_init(token));
+			ft_lstadd_front2(&pipelist, pipeline_init(token, ms));
 		else
-			ft_lstadd_back2(&pipelist, pipeline_init(token));
+			ft_lstadd_back2(&pipelist, pipeline_init(token, ms));
 		token = next_token(token);
 		i++;
 	}

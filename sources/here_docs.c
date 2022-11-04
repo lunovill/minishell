@@ -6,7 +6,7 @@
 /*   By: skhali <skhali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 15:59:54 by skhali            #+#    #+#             */
-/*   Updated: 2022/10/29 01:33:36 by skhali           ###   ########.fr       */
+/*   Updated: 2022/11/04 16:29:50 by skhali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,14 +68,14 @@ int	create_hd(t_command **cmd)
 	hd = malloc(sizeof(t_heredoc));
 	if (!hd)
 		return (0);
-	limit = (*cmd)->cmds;
+	limit = ft_strjoin((*cmd)->cmds, "\n");
 	hd->file = ft_strdup("");
 	hd->filename = "";
 	handle_signals_heredoc();
 	while (1)
 	{
 		ft_putchar_fd('>', 1);
-		get_next_line(0, &tmp, 1);
+		tmp = get_next_line2(0);
 		if (!tmp)
 			return (free(limit), free(hd->file), free(hd), 0);
 		if (!ft_strcmp(limit, tmp))
@@ -83,7 +83,7 @@ int	create_hd(t_command **cmd)
 		hd->file = ft_strjoinms(hd->file, tmp);
 		free(tmp);
 	}
-	return (get_next_line(0, &tmp, 0), free(tmp), (*cmd)->hd = hd, 1);
+	return (free(tmp), free(limit), (*cmd)->hd = hd, 1);
 }
 
 int	here_doc_boucle(t_command **cmd, int *fd2, int *fd)
