@@ -6,7 +6,7 @@
 /*   By: skhali <skhali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 17:26:40 by skhali            #+#    #+#             */
-/*   Updated: 2022/10/29 01:27:36 by skhali           ###   ########.fr       */
+/*   Updated: 2022/11/04 16:37:50 by skhali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,11 @@ int	main(int argc, char **argv, char **env)
 			}
 			ptt = ptt->next;
 		}*/
+		lst_print(cmd);
 		exec(ms);
 		free_minishell(ms);
 	}
+	if (ms->char_env)
+		free_split(ms->char_env);
 	return (free_env(ms->env), free(ms), 0);
 }

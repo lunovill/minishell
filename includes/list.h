@@ -6,7 +6,7 @@
 /*   By: skhali <skhali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/28 01:25:23 by lunovill          #+#    #+#             */
-/*   Updated: 2022/10/29 01:27:09 by skhali           ###   ########.fr       */
+/*   Updated: 2022/11/04 15:52:17 by skhali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,5 +148,6 @@ void			ctrl_back_slash(int signum);
 int				exec(t_minishell *ms);
 void			print_signal(int signal);
 void			exec_child(t_minishell *ms, t_command *cmd, int *fd, int *tmp);
+void			free_split(char	**str);
 
 #endif

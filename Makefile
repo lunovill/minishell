@@ -6,7 +6,7 @@
 #    By: skhali <skhali@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/15 05:19:02 by lunovill          #+#    #+#              #
-#    Updated: 2022/10/29 01:59:06 by skhali           ###   ########.fr        #
+#    Updated: 2022/11/04 15:40:15 by skhali           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,7 +68,7 @@ LIB_DIR = libft
 #									COMPILATION									#
  #=============================================================================#
 
-CC = clang
+CC = gcc
 CFLAGS = -Wall -Wextra -Werror -g
 CDFLAGS = -MMD -MP
 CIFLAGS = -Iincludes -I$(LIB_DIR)/includes

@@ -6,7 +6,7 @@
 /*   By: skhali <skhali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 02:56:18 by skhali            #+#    #+#             */
-/*   Updated: 2022/10/26 18:22:42 by skhali           ###   ########.fr       */
+/*   Updated: 2022/11/04 16:50:10 by skhali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,12 @@ void	exec_child_utils(t_minishell *ms, t_command *cmd)
 	{
 		ft_putstr_fd(": No such file or directory\n", 2);
 		g_status = 1;
+		close(fd2[1]);
+		close(fd2[0]);
+		free_minishell(ms);
+		if (ms->char_env)
+			free_split(ms->char_env);
+		free(ms);
 		exit(1);
 	}
 	exec_cmd(ms, cmd);
@@ -61,6 +67,8 @@ void	exec_child_utils(t_minishell *ms, t_command *cmd)
 	close(fd2[1]);
 	close(fd2[0]);
 	free_minishell(ms);
+	if (ms->char_env)
+		free_split(ms->char_env);
 	free_env(ms->env);
 	free(ms);
 	exit(127);

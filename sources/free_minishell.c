@@ -6,7 +6,7 @@
 /*   By: skhali <skhali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 13:10:56 by skhali            #+#    #+#             */
-/*   Updated: 2022/10/23 13:50:31 by skhali           ###   ########.fr       */
+/*   Updated: 2022/11/04 16:03:55 by skhali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	free_cmds(t_cmd *cmds)
 	free(cmds);
 }
 
-		//free(tmp->val);
 void	free_env(t_env *env)
 {
 	t_env	*tmp;
