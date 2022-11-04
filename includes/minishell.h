@@ -67,8 +67,8 @@ int				built_in_cd(t_env *env, char **cmd);
 int				built_in_export(t_minishell *ms, t_env *env, char **cmd);
 int				built_in_unset(t_env **env, char **cmd);
 int				built_in_echo(char **cmds);
-int				built_in_exit(t_minishell *ms, char **cmd, int child);
-int				builtins(t_minishell *ms, char **cmd, int child);
+int				built_in_exit(int *fd, t_minishell *ms, char **cmd, int child);
+int				builtins(int *fd, t_minishell *ms, char **cmd, int child);
 
 size_t			ft_strlen(const char *s);
 char			*ft_strjoinms(char *s1, char *s2);

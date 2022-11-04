@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int	builtins(t_minishell *ms, char **cmd, int child)
+int	builtins(int *fd, t_minishell *ms, char **cmd, int child)
 {
 	if (!cmd[0])
 		return (-1);
@@ -29,6 +29,6 @@ int	builtins(t_minishell *ms, char **cmd, int child)
 	else if (!ft_strncmp(cmd[0], "unset", sizeof(cmd[0])))
 		return (built_in_unset(&(ms->env), cmd));
 	else if (!ft_strncmp(cmd[0], "exit", sizeof(cmd[0])))
-		return (built_in_exit(ms, cmd, child));
+		return (built_in_exit(fd, ms, cmd, child));
 	return (-1);
 }

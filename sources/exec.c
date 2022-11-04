@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int	exec_cmd(t_minishell *ms, t_command *cmds)
+int	exec_cmd(t_minishell *ms, t_command *cmds, int *fd)
 {
 	char		*path;
 	t_command	*cmd;
@@ -24,7 +24,7 @@ int	exec_cmd(t_minishell *ms, t_command *cmds)
 	{
 		handle_signals();
 		if (is_builtin(cmds))
-			return (g_status = builtins(ms, cmds->cmds_split, 1), 1);
+			return (g_status = builtins(fd, ms, cmds->cmds_split, 1), 1);
 		else
 		{
 			path = cmd_path(ms->paths, cmds->cmds_split[0]);
@@ -67,7 +67,7 @@ void	exec_child_utils(t_minishell *ms, t_command *cmd)
 		exec_child_utils_free(ms);
 		exit(1);
 	}
-	exec_cmd(ms, cmd);
+	exec_cmd(ms, cmd, fd2);
 	dup2(fd2[0], 0);
 	dup2(fd2[1], 1);
 	close(fd2[1]);

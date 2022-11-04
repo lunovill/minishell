@@ -114,7 +114,7 @@ int	exec_single_builtin(t_minishell *ms)
 		return (ft_putstr_fd(": No such file or directory\n", 2), -1);
 	cmd = find_word(ms->partition->cmds);
 	if (cmd)
-		g_status = builtins(ms, cmd->cmds_split, 0);
+		g_status = builtins(fd, ms, cmd->cmds_split, 0);
 	dup2(fd[0], 0);
 	dup2(fd[1], 1);
 	close(fd[1]);
