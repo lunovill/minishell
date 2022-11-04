@@ -90,7 +90,5 @@ t_cmd	*tk_recognition(char *line, char **env)
 		return (lst_free(cmd), NULL);
 	if (tk_split_cmd(cmd) == -1)
 		return (lst_free(cmd), NULL);
-	// lst_print(cmd);
-	// exit (0);
 	return (cmd);
 }

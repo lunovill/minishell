@@ -12,32 +12,6 @@
 
 #include "minishell.h"
 
-char	*word_parsing(t_token *token)
-{
-	char	*str;
-	int		i;
-
-	i = 0;
-	str = NULL;
-	while (token && (token->id != 12))
-	{
-		if (((token->id == 1) || (token->id == 2) || (token->id == 5
-					&& !(token->previous && token->id == 5
-						&& token->previous->id == 10))
-				|| (token->id == 3)) && (is_notspace(token->s)))
-		{
-			str = ft_strjoinms(str, token->s);
-			str = ft_strjoinms(str, "\n");
-			i = 1;
-		}
-		token = token->next;
-	}
-	if (i)
-		return (str);
-	else
-		return (free(str), NULL);
-}
-
 t_command	*cmds_parsing(t_token *token)
 {
 	t_command	*list;

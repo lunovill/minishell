@@ -80,7 +80,7 @@ int	main(int argc, char **argv, char **env)
 			continue ;
 		g_status = 0;
 		ms = init_minishell(ms, cmd);
-		exec(ms);
+		// exec(ms);
 		free_minishell(ms);
 	}
 	return (free_split(ms->char_env), free_env(ms->env), free(ms), 0);

@@ -68,14 +68,13 @@ int	create_hd(t_command **cmd)
 	hd = malloc(sizeof(t_heredoc));
 	if (!hd)
 		return (0);
-	limit = ft_strjoin((*cmd)->cmds, "\n");
+	limit = ft_strdup((*cmd)->cmds);
 	hd->file = ft_strdup("");
 	hd->filename = "";
 	handle_signals_heredoc();
 	while (1)
 	{
-		ft_putchar_fd('>', 1);
-		tmp = get_next_line2(0);
+		tmp = readline(">");
 		if (!tmp)
 			return (free(limit), free(hd->file), free(hd), 0);
 		if (!ft_strcmp(limit, tmp))

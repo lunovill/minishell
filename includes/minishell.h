@@ -119,5 +119,7 @@ void			ctrl_back_slash(int signum);
 int				exec(t_minishell *ms);
 void			print_signal(int signal);
 void			exec_child(t_minishell *ms, t_command *cmd, int *fd, int *tmp);
+void			free_split(char	**str);
+char			*word_parsing(t_token *token);
 
 #endif

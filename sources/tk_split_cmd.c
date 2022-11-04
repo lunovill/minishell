@@ -65,9 +65,9 @@ int	tk_split_cmd(t_cmd *cmd)
 	while (current)
 	{
 		if (current->id == TK_WD_CMD_NAME
-			&& (ft_strichr(current->s, CHAR_H_TAB) == -1
-				|| ft_strichr(current->s, CHAR_V_TAB) == -1
-				|| ft_strichr(current->s, CHAR_SPACE) == -1))
+			&& (ft_strichr(current->s, CHAR_H_TAB) != -1
+				|| ft_strichr(current->s, CHAR_V_TAB) != -1
+				|| ft_strichr(current->s, CHAR_SPACE) != -1))
 		{
 			current = ft_split_cmd(cmd, current);
 			if (!current)
