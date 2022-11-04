@@ -67,25 +67,24 @@ static int	tk_pipe(t_token *current)
 	return (1);
 }
 
-static void ft_split_cmd(t_cmd *cmd, t_token *current, ssize_t i)
+static t_token	*ft_split_cmd(t_cmd *cmd, t_token *current)
 {
 	t_token	*token;
 	t_token	*new;
+	unsigned int i;
 	unsigned int j;
 
-	if (i == -1)
-		return ;
-	token = lst_new();
-	token->s = ft_strndup(current->s, i);
-	token->id = TK_WD_CMD_NAME;
-	lst_add(cmd, current, token);
+	i = 0;
+	token = current;
 	while (current->s[i])
 	{
-		while (current->s[i] && current->s[i] == CHAR_H_TAB
-				&& current->s[i] == CHAR_V_TAB
-				&& current->s[i] == CHAR_SPACE)
+		while (current->s[i] && (current->s[i] == CHAR_H_TAB
+				|| current->s[i] == CHAR_V_TAB
+				|| current->s[i] == CHAR_SPACE))
 			i++;
 		j = i;
+		if (current->s[i])
+			j++;
 		while (current->s[j] && current->s[j] != CHAR_H_TAB
 				&& current->s[j] != CHAR_V_TAB
 				&& current->s[j] != CHAR_SPACE)
@@ -93,31 +92,42 @@ static void ft_split_cmd(t_cmd *cmd, t_token *current, ssize_t i)
 		if (current->s[i])
 		{
 			new = lst_new();
+			if (!new)
+				return (NULL);
 			new->s = ft_strndup(current->s + i, j - i);
-			new->id = TK_WORD;
+			if (!new->s)
+				return (NULL);
+			if (token == current)
+				new->id = TK_WD_CMD_NAME;
+			else
+				new->id = TK_WD_CMD_WORD;
 			lst_add(cmd, token, new);
 			token = new;
 		}
+		i = j;
 	}
 	lst_rmv(cmd, current);
-	lst_print(cmd);
-	exit(42);
+	return (token);
 }
-static void	tk_split_cmd(t_cmd *cmd)
+static int	tk_split_cmd(t_cmd *cmd)
 {
 	t_token	*current;
 
 	current = cmd->first;
 	while (current)
 	{
-		if (current->id == TK_WD_CMD_NAME)
+		if (current->id == TK_WD_CMD_NAME
+			&& (ft_strichr(current->s, CHAR_H_TAB) == -1
+			|| ft_strichr(current->s, CHAR_H_TAB) == -1
+			|| ft_strichr(current->s, CHAR_H_TAB) == -1))
 		{
-			ft_split_cmd(cmd, current, ft_strichr(current->s, CHAR_H_TAB));
-			ft_split_cmd(cmd, current, ft_strichr(current->s, CHAR_V_TAB));
-			ft_split_cmd(cmd, current, ft_strichr(current->s, CHAR_SPACE));
+			current = ft_split_cmd(cmd, current);
+			if (!current)
+				return (-1);
 		}
 		current = current->next;
 	}
+	return (0);
 }
 
 t_cmd	*tk_recognition(char *line, char **env)
@@ -138,6 +148,8 @@ t_cmd	*tk_recognition(char *line, char **env)
 		return (lst_free(cmd), NULL);
 	if (!tk_pipe(cmd->last))
 		return (lst_free(cmd), NULL);
-	tk_split_cmd(cmd);
+	if (tk_split_cmd(cmd) == -1)
+		return (lst_free(cmd), NULL);
+	// lst_print(cmd);
 	return (cmd);
 }
