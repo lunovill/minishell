@@ -15,37 +15,39 @@
  #=============================================================================#
 
 SRCS_DIR = sources
-SRC_FILES =	lst_add\
+SRC_FILES =	builtins\
+				cd\
+				check_char\
+				echo\
+				env\
+				env_mangement\
+				exec\
+				exec_single_builtin\
+				exec_utils\
+				exec_utils2\
+				exit\
+				export\
+				export_utils\
+				free_minishell\
+				here_docs\
+				init_minishell\
+				init_minishell_utils\
+				lst_add\
 				lst_free\
 				lst_init\
 				lst_new\
 				lst_print\
 				lst_rmv\
+				lst_utils\
 				main\
+				pwd\
+				signals\
 				tk_command\
 				tk_delimiter\
-				tk_recognition\
 				tk_expansion \
-				cd \
-				echo \
-				export \
-				export_utils \
-				pwd \
-				unset \
-				exit \
-				builtins \
-				env \
-				here_docs \
-				exec_single_builtin \
-				exec \
-				env_mangement \
-				free_minishell \
-				init_minishell \
-				init_minishell_utils \
-				lst_utils \
-				exec_utils \
-				exec_utils2 \
-				signals \
+				tk_recognition\
+				tk_split_cmd\
+				unset\
 
 				
 

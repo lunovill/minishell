@@ -11,13 +11,14 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-#define CheckQuote(c) (((c) != CHAR_SGL_QUOTE && (c) != CHAR_DBL_QUOTE) ? 0 : (c))
 
 static char	*tk_search_expansion(const char *expansion, char **env)
 {
 	unsigned int	i;
 	size_t			size;
 
+	if (!expansion)
+		return (NULL);
 	i = 0;
 	if (expansion[0] != '?')
 	{
@@ -39,24 +40,22 @@ static char	*tk_search_expansion(const char *expansion, char **env)
 }
 
 static int	tk_add_expansion(char **line, unsigned int start,
-unsigned int end, char *expansion, int set)
+unsigned int end, char *expansion)
 {
 	char	*new;
+	int		set;
 
-	new = ft_strndup(*line, start);
-	if (!new)
+	if (!expansion)
 		return (-1);
-	if (set)
+	set = check_char((*line)[end], 1);
+	new = ft_strndup(*line, start);
+	if (!set)
 		new = (ft_strjoinf(new, "\"", 1));
 	if (!new)
 		return (-1);
 	if (expansion)
-	{
 		new = ft_strjoinf(new, expansion, 2);
-		if (!new)
-			return (-1);
-	}
-	if (set)
+	if (!set)
 		new = (ft_strjoinf(new, "\"", 1));
 	if (!new)
 		return (-1);
@@ -74,26 +73,16 @@ int	tk_expansion(char **line, unsigned int *start, char **env)
 	int				ret;
 
 	end = *start;
-	if ((*line)[end] == CHAR_SGL_QUOTE || (*line)[end] == CHAR_DBL_QUOTE)
-	{
-		(*start)--;
-		tk_add_expansion(&*line, *start, end, NULL, 0);
-		return (0);
-	}
+	if (check_char((*line)[end], 1))
+		return ((*start)--, tk_add_expansion(&*line, *start, end, NULL), 0);
 	else if (ft_isdigit((*line)[end]))
-	{
 		while (ft_isdigit((*line)[++end]))
 			;
-	}
 	else if ((*line)[end] != '?')
 	{
-		while ((*line)[end] && (*line)[end] != CHAR_EXPANSION
-				&& (*line)[end] != CHAR_H_TAB
-				&& (*line)[end] != CHAR_V_TAB
-				&& (*line)[end] != CHAR_SPACE
-				&& (*line)[end] != CHAR_DBL_QUOTE
-				&& (*line)[end] != CHAR_SGL_QUOTE
-				&& ft_strichr(STRG_OPERATOR, (*line)[end]) == -1)
+		while ((*line)[end] && !check_char((*line)[end], 0)
+			&& !check_char((*line)[end], 1) && !check_char((*line)[end], 2)
+			&& !check_char((*line)[end], 3))
 			end++;
 		if (end == *start)
 			return (0);
@@ -101,12 +90,7 @@ int	tk_expansion(char **line, unsigned int *start, char **env)
 	else
 		end++;
 	expansion = ft_strndup(*line + *start, end - *start);
-	if (!expansion)
-		return (-1);
-	(*start)--;
-	ret = tk_add_expansion(&*line, *start, end,
-			tk_search_expansion(expansion, env), 1);
-	if (ret == -1 || !*line)
-		return (-1);
-	return (1);
+	ret = tk_add_expansion(&*line, --(*start), end,
+			tk_search_expansion(expansion, env));
+	return (ret);
 }

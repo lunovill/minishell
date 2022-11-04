@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "list.h"
+#include "minishell.h"
 //si il exite deja, le reset
 // sinon l'ajouter
 //creer une fonction het var et get content

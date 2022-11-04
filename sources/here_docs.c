@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "list.h"
+#include "minishell.h"
 
 char	*delete_quotes(char *str)
 {
@@ -68,7 +68,6 @@ int	create_hd(t_command **cmd)
 	hd = malloc(sizeof(t_heredoc));
 	if (!hd)
 		return (0);
-	// limit = ft_strjoin((*cmd)->cmds, "\n");
 	limit = (*cmd)->cmds;
 	hd->file = ft_strdup("");
 	hd->filename = "";
@@ -84,7 +83,6 @@ int	create_hd(t_command **cmd)
 		hd->file = ft_strjoinms(hd->file, tmp);
 		free(tmp);
 	}
-	// return (free(tmp), free(limit), (*cmd)->hd = hd, 1);
 	return (get_next_line(0, &tmp, 0), free(tmp), (*cmd)->hd = hd, 1);
 }
 

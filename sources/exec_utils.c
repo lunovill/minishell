@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "list.h"
+#include "minishell.h"
 
 char	*cmd_path(char **paths, char *cmd)
 {
@@ -19,11 +19,8 @@ char	*cmd_path(char **paths, char *cmd)
 
 	if (!cmd[0])
 		return (NULL);
-	if (ft_strchr(cmd, '/'))
-	{
-		if (access(cmd, F_OK | X_OK) == 0)
-			return (cmd);
-	}
+	if (ft_strchr(cmd, '/') && access(cmd, F_OK | X_OK) == 0)
+		return (cmd);
 	else
 	{
 		if (!paths)

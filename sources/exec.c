@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "list.h"
+#include "minishell.h"
 
 int	exec_cmd(t_minishell *ms, t_command *cmds)
 {

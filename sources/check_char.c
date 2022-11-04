@@ -1,25 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lst_free.c                                         :+:      :+:    :+:   */
+/*   check_char.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lunovill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/23 23:02:05 by lunovill          #+#    #+#             */
-/*   Updated: 2022/11/04 17:34:36 by lunovill         ###   ########.fr       */
+/*   Created: 2022/11/04 18:02:10 by lunovill          #+#    #+#             */
+/*   Updated: 2022/11/04 18:02:11 by lunovill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "list.h"
+#include "minishell.h"
 
-void	lst_free(t_cmd *cmd)
+int	check_char(char c, int set)
 {
-	if (cmd)
-	{
-		if (cmd->size)
-			while (cmd->first)
-				lst_rmv(cmd, cmd->first);
-		free(cmd);
-	}
-	cmd = NULL;
+	if (!set && ft_strichr(STRG_OPERATOR, c) != -1)
+		return (1);
+	else if (set == 1 && (c == CHAR_SGL_QUOTE || c == CHAR_DBL_QUOTE))
+		return (c);
+	else if (set == 2 && (c == CHAR_EXPANSION))
+		return (c);
+	else if (set == 3 && (c == CHAR_H_TAB
+			|| c == CHAR_V_TAB || c == CHAR_SPACE))
+		return (1);
+	return (0);
 }

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "list.h"
+#include "minishell.h"
 #include "minishell.h"
 
 int	g_status = 0;
@@ -80,18 +80,6 @@ int	main(int argc, char **argv, char **env)
 		ms = init_minishell(ms, cmd);
 		if (!ms)
 			return (0);
-		/*t_partition *ptt = ms->partition;
-		t_command *pt;
-		while (ptt)
-		{
-			pt = ptt->cmds;
-			while (pt)
-			{
-				printf("partition : %s, id : %d\n", pt->cmds, pt->id);
-				pt = pt->next;
-			}
-			ptt = ptt->next;
-		}*/
 		exec(ms);
 		free_minishell(ms);
 	}

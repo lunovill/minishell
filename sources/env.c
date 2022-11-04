@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "list.h"
+#include "minishell.h"
 //si le temps : modifier la valeur de _ en env
 //display error si un argument est entré
 int	built_in_env(t_env *env, char **cmd)

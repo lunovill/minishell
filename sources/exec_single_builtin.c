@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "list.h"
+#include "minishell.h"
 #include <errno.h>
 
 int	is_builtin(t_command *cmd)

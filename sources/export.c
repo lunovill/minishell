@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "list.h"
+#include "minishell.h"
 
 //verifier les erreurs de parsing
 //verfier la forme du export : =, +=, :=

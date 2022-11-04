@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "list.h"
+#include "minishell.h"
 //SI PWD existe deja -> renvois son contenu
 //Si il est unset -> renvois el dossier dans Trash
 //Parcourir env et chercher PWD

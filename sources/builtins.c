@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "list.h"
+#include "minishell.h"
 
 int	builtins(t_minishell *ms, char **cmd, int child)
 {
