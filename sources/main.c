@@ -6,7 +6,7 @@
 /*   By: skhali <skhali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 17:26:40 by skhali            #+#    #+#             */
-/*   Updated: 2022/11/04 16:37:50 by skhali           ###   ########.fr       */
+/*   Updated: 2022/11/04 17:12:01 by skhali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ t_minishell	*init_start(char **env, int argc, char **argv)
 	(void)argv;
 	(void)argc;
 	ms = malloc(sizeof(t_minishell));
+	if (!ms)
+		return (exit(1), NULL);
 	ms->env = create_env(env);
 	ms->char_env = envlst_to_tab(ms->env);
 	return (ms);
@@ -78,25 +80,9 @@ int	main(int argc, char **argv, char **env)
 			continue ;
 		g_status = 0;
 		ms = init_minishell(ms, cmd);
-		if (!ms)
-			return (0);
-		/*t_partition *ptt = ms->partition;
-		t_command *pt;
-		while (ptt)
-		{
-			pt = ptt->cmds;
-			while (pt)
-			{
-				printf("partition : %s, id : %d\n", pt->cmds, pt->id);
-				pt = pt->next;
-			}
-			ptt = ptt->next;
-		}*/
 		lst_print(cmd);
 		exec(ms);
 		free_minishell(ms);
 	}
-	if (ms->char_env)
-		free_split(ms->char_env);
-	return (free_env(ms->env), free(ms), 0);
+	return (free_split(ms->char_env), free_env(ms->env), free(ms), 0);
 }

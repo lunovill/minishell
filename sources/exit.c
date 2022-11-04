@@ -6,7 +6,7 @@
 /*   By: skhali <skhali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 13:08:21 by skhali            #+#    #+#             */
-/*   Updated: 2022/11/04 16:49:02 by skhali           ###   ########.fr       */
+/*   Updated: 2022/11/04 16:59:36 by skhali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,16 @@ int	built_in_exit(t_minishell *ms, char **cmd, int child)
 	if (!child)
 		ft_putstr_fd("exit\n", 1);
 	if (size_chartab(cmd) == 1)
-		return (free_minishell(ms), free_env(ms->env), free_split(ms->char_env), free(ms), exit(g_status),
-			g_status);
+		return (free_minishell(ms), free_env(ms->env), free_split(ms->char_env),
+			free(ms), exit(g_status), g_status);
 	if (check_exit_numeric(cmd[1]))
 		return (ft_putstr_fd("exit: numeric argument required\n", 2),
-			free_minishell(ms), free_env(ms->env), free_split(ms->char_env), free(ms), exit(2), 2);
+			free_minishell(ms), free_env(ms->env), free_split(ms->char_env),
+			free(ms), exit(2), 2);
 	if (size_chartab(cmd) > 2)
 		return (ft_putstr_fd("exit: too many arguments\n", 2), 1);
 	code = ft_atoi(cmd[1]);
-	return (free_minishell(ms), free_env(ms->env), free_split(ms->char_env), free(ms),
+	return (free_minishell(ms), free_env(ms->env),
+		free_split(ms->char_env), free(ms),
 		exit(code), 0);
 }

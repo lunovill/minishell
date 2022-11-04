@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst_print.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lunovill <lunovill@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skhali <skhali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/28 01:35:13 by lunovill          #+#    #+#             */
-/*   Updated: 2021/04/28 04:37:19 by lunovill         ###   ########.fr       */
+/*   Updated: 2022/11/04 17:00:17 by skhali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int	lst_print(t_cmd *list)
 	while ((current != NULL) && i--)
 	{
 		ft_printf("case n°%u\n", list->size - i);
-		// ft_printf("%u\n", current->id);
 		ft_printf("[%u][%s]\n", current->id, current->s);
 		ft_putchar('\n');
 		current = current->next;

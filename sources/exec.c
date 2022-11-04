@@ -6,7 +6,7 @@
 /*   By: skhali <skhali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 02:56:18 by skhali            #+#    #+#             */
-/*   Updated: 2022/11/04 16:50:10 by skhali           ###   ########.fr       */
+/*   Updated: 2022/11/04 17:08:57 by skhali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,15 @@ int	exec_cmd(t_minishell *ms, t_command *cmds)
 	return (1);
 }
 
+void	exec_child_utils_free(t_minishell *ms)
+{
+	free_minishell(ms);
+	if (ms->char_env)
+		free_split(ms->char_env);
+	free_env(ms->env);
+	free(ms);
+}
+
 void	exec_child_utils(t_minishell *ms, t_command *cmd)
 {
 	int	fd_in;
@@ -55,10 +64,7 @@ void	exec_child_utils(t_minishell *ms, t_command *cmd)
 		g_status = 1;
 		close(fd2[1]);
 		close(fd2[0]);
-		free_minishell(ms);
-		if (ms->char_env)
-			free_split(ms->char_env);
-		free(ms);
+		exec_child_utils_free(ms);
 		exit(1);
 	}
 	exec_cmd(ms, cmd);
@@ -66,11 +72,7 @@ void	exec_child_utils(t_minishell *ms, t_command *cmd)
 	dup2(fd2[1], 1);
 	close(fd2[1]);
 	close(fd2[0]);
-	free_minishell(ms);
-	if (ms->char_env)
-		free_split(ms->char_env);
-	free_env(ms->env);
-	free(ms);
+	exec_child_utils_free(ms);
 	exit(127);
 }
 
@@ -107,20 +109,4 @@ void	exec_child(t_minishell *ms, t_command *cmd, int *fd, int *tmp)
 	}
 	else
 		exec_between(ms, cmd, fd, tmp);
-}
-
-void	print_signal(int signal)
-{
-	if (signal == SIGINT)
-	{
-		write(2, "\n", 2);
-		rl_replace_line("", 0);
-		rl_on_new_line();
-	}
-	if (signal - 128 == SIGQUIT)
-	{
-		write(2, "Quit (core dumped)\n", 20);
-		rl_replace_line("", 0);
-		rl_on_new_line();
-	}
 }

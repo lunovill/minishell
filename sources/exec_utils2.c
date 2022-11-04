@@ -6,7 +6,7 @@
 /*   By: skhali <skhali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 18:02:51 by skhali            #+#    #+#             */
-/*   Updated: 2022/10/26 18:27:12 by skhali           ###   ########.fr       */
+/*   Updated: 2022/11/04 17:09:29 by skhali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,4 +88,20 @@ int	exec(t_minishell *ms)
 	else
 		g_status = exec2(ms);
 	return (1);
+}
+
+void	print_signal(int signal)
+{
+	if (signal == SIGINT)
+	{
+		write(2, "\n", 2);
+		rl_replace_line("", 0);
+		rl_on_new_line();
+	}
+	if (signal - 128 == SIGQUIT)
+	{
+		write(2, "Quit (core dumped)\n", 20);
+		rl_replace_line("", 0);
+		rl_on_new_line();
+	}
 }
