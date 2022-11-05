@@ -6,7 +6,7 @@
 /*   By: skhali <skhali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 17:26:40 by skhali            #+#    #+#             */
-/*   Updated: 2022/11/04 17:12:01 by skhali           ###   ########.fr       */
+/*   Updated: 2022/11/05 03:15:24 by skhali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,18 +80,19 @@ int	main(int argc, char **argv, char **env)
 			continue ;
 		g_status = 0;
 		ms = init_minishell(ms, cmd);
-		// t_partition *ptt = ms->partition;
-		// t_command *pt;
-		// // while (ptt)
-		// {
-		// 	pt = ptt->cmds;
-		// 	while (pt)
-		// 	{
-		// 		printf("partition : %s, id : %d\n", pt->cmds, pt->id);
-		// 		pt = pt->next;
-		// 	}
-		// 	ptt = ptt->next;
-		// }
+		/*t_partition *ptt = ms->partition;
+		t_command *pt;
+		while (ptt)
+		{
+		pt = ptt->cmds;
+			while (pt)
+			{
+				printf("partition : %s, id : %d\n", pt->cmds, pt->id);
+				pt = pt->next;
+			}
+			ptt = ptt->next;
+		}*/
+		lst_print(cmd);
 		exec(ms);
 		free_minishell(ms);
 	}

@@ -6,7 +6,7 @@
 #    By: skhali <skhali@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/15 05:19:02 by lunovill          #+#    #+#              #
-#    Updated: 2022/11/04 15:40:15 by skhali           ###   ########.fr        #
+#    Updated: 2022/11/05 03:24:06 by skhali           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,6 @@ SRC_FILES =	builtins\
 				tk_delimiter\
 				tk_expansion \
 				tk_recognition\
-				tk_split_cmd\
 				unset\
 
 				

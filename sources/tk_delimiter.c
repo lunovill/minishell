@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tk_delimiter.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lunovill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: skhali <skhali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 21:56:22 by lunovill          #+#    #+#             */
-/*   Updated: 2022/10/24 21:56:24 by lunovill         ###   ########.fr       */
+/*   Updated: 2022/11/05 03:09:07 by skhali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	tk_delimiter(char *line, t_cmd *cmd, t_token *token)
 	unsigned int	i;
 	unsigned int	j;
 
-	tab[0]= 0;
+	tab[0] = 0;
 	tab[1] = 0;
 	i = 0;
 	j = 0;
@@ -39,19 +39,19 @@ int	tk_delimiter(char *line, t_cmd *cmd, t_token *token)
 	{
 		if (i && j)
 			token = lst_new();
-		tab[0]= check_char(line[i], 0);
+		tab[0] = check_char(line[i], 0);
 		tab[1] = check_char(line[i], 1);
 		tab[2] = check_char(line[i], 2);
 		j = i + 1;
 		while (line[j])
 		{
-			if (tab[0]&& !tab[1] && tk_isoprtr(line + i, j - i))
+			if (tab[0] && !tab[1] && tk_isoprtr(line + i, j - i))
 			{
-				tab[0]= check_char(line[j], 0);
+				tab[0] = check_char(line[j], 0);
 				j++;
 				continue ;
 			}
-			else if (tab[0]&& !tab[1] && !tk_isoprtr(line + i, j - i))
+			else if (tab[0] && !tab[1] && !tk_isoprtr(line + i, j - i))
 				break ;
 			else if (!tab[1] && check_char(line[j], 1))
 			{
@@ -67,7 +67,8 @@ int	tk_delimiter(char *line, t_cmd *cmd, t_token *token)
 			}
 			else if (tab[1] && line[j] == tab[1])
 				tab[1] = 0;
-			else if (tab[1] != CHAR_SGL_QUOTE && tab[2] && !check_char(line[j], 0))
+			else if (tab[1] != CHAR_SGL_QUOTE && tab[2]
+				&& !check_char(line[j], 0))
 			{
 				tab[2] = 0;
 				ret = tk_expansion(&line, &j, cmd->env);
@@ -80,7 +81,7 @@ int	tk_delimiter(char *line, t_cmd *cmd, t_token *token)
 				break ;
 			else if (!tab[1] && check_char(line[j], 3))
 				break ;
-			tab[0]= check_char(line[j], 0);
+			tab[0] = check_char(line[j], 0);
 			tab[2] = check_char(line[j], 2);
 			j++;
 		}

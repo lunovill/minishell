@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tk_expansion.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lunovill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: skhali <skhali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 21:56:52 by lunovill          #+#    #+#             */
-/*   Updated: 2022/10/24 21:56:53 by lunovill         ###   ########.fr       */
+/*   Updated: 2022/11/05 03:02:08 by skhali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,5 +92,5 @@ int	tk_expansion(char **line, unsigned int *start, char **env)
 	expansion = ft_strndup(*line + *start, end - *start);
 	ret = tk_add_expansion(&*line, --(*start), end,
 			tk_search_expansion(expansion, env));
-	return (ret);
+	return (delete_quotes(*line), ret);
 }
